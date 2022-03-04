@@ -1,5 +1,3 @@
-package lab1;
-
 public class HelloNumbers {
     public static void main(String[] args) {
         for (int i = 0, sum = 0; i < 10; i++) {
