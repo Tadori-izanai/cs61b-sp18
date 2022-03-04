@@ -29,5 +29,16 @@ public class LeapYear {
             }
         }
     }
+
+    /**
+     * @param year to be analyzed
+     * @return if the year is leap
+     */
+    public static boolean isLeapYear(int year) {
+        if ((year % 4 == 0) && (year % 4 != 0))
+            return true;
+        else
+            return false;
+    }
 }
 
