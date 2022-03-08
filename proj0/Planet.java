@@ -1,11 +1,12 @@
-import com.sun.source.tree.ReturnTree;
+//import com.sun.source.tree.ReturnTree;
 
 import javax.management.ListenerNotFoundException;
 import java.lang.management.PlatformManagedObject;
 import java.util.ConcurrentModificationException;
 
 public class Planet {
-    public static final double G = 6.67e-11;    // 在类中应该将任何常量声明为 static final
+//    public static final double G = 6.67e-11;    // 在类中应该将任何常量声明为 static final
+    private static final double G = 6.67e-11;    // gradescope 提示使用 private
 
     // instance variables
     public double xxPos;           // current x position
