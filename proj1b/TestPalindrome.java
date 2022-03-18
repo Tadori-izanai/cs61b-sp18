@@ -22,9 +22,19 @@ public class TestPalindrome {
         String[] inputs = {"foo", "", "a", "dad", "oo"};
         boolean[] expected = {false, true, true, true, true};
         for (int i = 0; i < 5; i++) {
-            assertEquals(palindrome.iaPalindrome(inputs[i]), expected[i]);
+            assertEquals(palindrome.isPalindrome(inputs[i]), expected[i]);
         }
         // 也可以利用 assertFalse/assertTrue, 如 assertFalse(palindrome.isPalindrome("cat"));
+    }
+
+    @Test
+    public void testPalindrome() {
+        CharacterComparator cc = new OffByOne();
+        String[] inputs = {"this", "", "a", "yz", "xyz"};
+        boolean[] expected = {true, true, true, true, false};
+        for (int i = 0; i < 5; i++) {
+            assertEquals(palindrome.isPalindrome(inputs[i], cc), expected[i]);
+        }
     }
 
 
