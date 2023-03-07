@@ -80,8 +80,7 @@ public class MazeAStarPath extends MazeExplorer {
             // relax:
             for (int w : maze.adj(v)) {
                 if (!marked[w]) {
-                    SearchNode q = new SearchNode(w);
-                    if (p.priority + 1 < q.priority) {
+                    if (distTo[v] + 1 < distTo[w]) {
                         distTo[w] = distTo[v] + 1;
                         edgeTo[w] = v;
                         pq.insert(new SearchNode(w));
