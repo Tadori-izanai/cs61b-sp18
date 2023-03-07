@@ -24,13 +24,6 @@ public class MazeAStarPath extends MazeExplorer {
         s = maze.xyTo1D(sourceX, sourceY);
         t = maze.xyTo1D(targetX, targetY);
         edgeTo[s] = s;
-
-        // Ensure distTo[v] + h(v) is no more than Integer.MAX_VALUE
-        int N = maze.N();
-        for (int i = 0; i < maze.V(); i += 1) {
-            distTo[i] -= 2 * N;
-        }
-
         distTo[s] = 0;
     }
 
