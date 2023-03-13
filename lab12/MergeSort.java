@@ -35,7 +35,13 @@ public class MergeSort {
     private static <Item extends Comparable> Queue<Queue<Item>>
             makeSingleItemQueues(Queue<Item> items) {
         // Your code here!
-        return null;
+        Queue<Queue<Item>> returnVal = new Queue<>();
+        for (Item x : items) {
+            Queue<Item> singleItemQueue = new Queue<>();
+            singleItemQueue.enqueue(x);
+            returnVal.enqueue(singleItemQueue);
+        }
+        return returnVal;
     }
 
     /**
@@ -53,14 +59,49 @@ public class MergeSort {
      */
     private static <Item extends Comparable> Queue<Item> mergeSortedQueues(
             Queue<Item> q1, Queue<Item> q2) {
-        // Your code here!
-        return null;
+        Queue<Item> returnVal = new Queue<>();
+        while (!q1.isEmpty() && !q2.isEmpty()) {
+            returnVal.enqueue(getMin(q1, q2));
+        }
+        while (!q1.isEmpty()) {
+            returnVal.enqueue(q1.dequeue());
+        }
+        while (!q2.isEmpty()) {
+            returnVal.enqueue(q2.dequeue());
+        }
+
+        return returnVal;
     }
 
     /** Returns a Queue that contains the given items sorted from least to greatest. */
     public static <Item extends Comparable> Queue<Item> mergeSort(
             Queue<Item> items) {
         // Your code here!
-        return items;
+        Queue<Queue<Item>> queues = makeSingleItemQueues(items);
+        while (queues.size() > 1) {
+            Queue<Item> q1 = queues.dequeue();
+            Queue<Item> q2 = queues.dequeue();
+            queues.enqueue(mergeSortedQueues(q1, q2));
+        }
+        return queues.peek();
+    }
+
+    public static void main(String[] args) {
+        Queue<String> touhou = new Queue<>();
+        touhou.enqueue("Leimu");
+        touhou.enqueue("Marisa");
+        touhou.enqueue("Cirno");
+        touhou.enqueue("Lumia");
+        touhou.enqueue("Suwako");
+        touhou.enqueue("Sanae");
+        touhou.enqueue("Koishi");
+        touhou.enqueue("Satori");
+        touhou.enqueue("Yokari");
+        touhou.enqueue("Chen");
+
+        System.out.println(touhou);
+        Queue<String> touhouSorted = MergeSort.mergeSort(touhou);
+        System.out.println(touhou);
+        System.out.println(touhouSorted);
     }
 }

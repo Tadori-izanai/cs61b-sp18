@@ -48,12 +48,50 @@ public class QuickSort {
             Queue<Item> unsorted, Item pivot,
             Queue<Item> less, Queue<Item> equal, Queue<Item> greater) {
         // Your code here!
+        for (Item x : unsorted) {
+            if (x.compareTo(pivot) < 0) {
+                less.enqueue(x);
+            } else if (x.compareTo(pivot) > 0) {
+                greater.enqueue(x);
+            } else {
+                equal.enqueue(x);
+            }
+        }
     }
 
     /** Returns a Queue that contains the given items sorted from least to greatest. */
     public static <Item extends Comparable> Queue<Item> quickSort(
             Queue<Item> items) {
         // Your code here!
-        return items;
+        if (items.size() <= 1) {
+            return catenate(items, new Queue<>());
+        }
+        Queue<Item> less = new Queue<>();
+        Queue<Item> greater = new Queue<>();
+        Queue<Item> equal = new Queue<>();
+        partition(items, getRandomItem(items), less, equal, greater);
+        less = quickSort(less);
+        greater = quickSort(greater);
+
+        return catenate(less, catenate(equal, greater));
+    }
+
+    public static void main(String[] args) {
+        Queue<String> touhou = new Queue<>();
+        touhou.enqueue("Leimu");
+        touhou.enqueue("Marisa");
+        touhou.enqueue("Cirno");
+        touhou.enqueue("Lumia");
+        touhou.enqueue("Suwako");
+        touhou.enqueue("Sanae");
+        touhou.enqueue("Koishi");
+        touhou.enqueue("Satori");
+        touhou.enqueue("Yokari");
+        touhou.enqueue("Chen");
+
+        System.out.println(touhou);
+        Queue<String> touhouSorted = QuickSort.quickSort(touhou);
+        System.out.println(touhou);
+        System.out.println(touhouSorted);
     }
 }
