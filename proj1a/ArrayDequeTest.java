@@ -4,19 +4,21 @@ public class ArrayDequeTest {
 
         int count = 0;
         for (int i = 0; i < 32; i++) {
-            if (i % 3 == 0)
+            if (i % 3 == 0) {
                 a.addFirst(count++);
-            else
+            } else {
                 a.addLast(count++);
+            }
         }
 
         a.printDeque();
 
-        for (int i = 0; i < 30; i++){
-            if (i % 3 == 0)
+        for (int i = 0; i < 30; i++) {
+            if (i % 3 == 0) {
                 a.removeLast();
-            else
+            } else {
                 a.removeFirst();
+            }
         }
 
         a.printDeque();
