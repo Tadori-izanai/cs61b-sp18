@@ -66,7 +66,7 @@ public class CountingSort {
      * @param arr int array that will be sorted
      */
     public static int[] betterCountingSort(int[] arr) {
-        // TODO make counting sort work with arrays containing negative numbers.
+        // make counting sort work with arrays containing negative numbers.
         int absoluteMaxNonNegative = 0;
         int absoluteMaxNegative = 0;
 

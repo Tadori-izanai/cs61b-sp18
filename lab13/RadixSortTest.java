@@ -5,19 +5,19 @@ import static org.junit.Assert.*;
 public class RadixSortTest {
     public static void main(String[] args) {
         String[] touhou = new String[] {
-                "Leimu",
-                "Marisa",
-                "Cirno",
-                "Lumia",
-                "Suwako",
-                "Sanae",
-                "Koishi",
-                "Satori",
-                "Yokari",
-                "Chen",
-                "Kirisame Marisa",
-                "",
-                "Hakurei Reimu"
+            "Leimu",
+            "Marisa",
+            "Cirno",
+            "Lumia",
+            "Suwako",
+            "Sanae",
+            "Koishi",
+            "Satori",
+            "Yokari",
+            "Chen",
+            "Kirisame Marisa",
+            "",
+            "Hakurei Reimu"
         };
 
         System.out.println(Arrays.toString(touhou));
@@ -32,16 +32,19 @@ public class RadixSortTest {
     @Test
     public void testSortLSD() {
         String[] touhou = new String[] {
-                "Leimu",
-                "Marisa",
-                "Cirno",
-                "Lumia",
-                "Suwako",
-                "Sanae",
-                "Koishi",
-                "Satori",
-                "Yokari",
-                "Chen"
+            "Leimu",
+            "Marisa",
+            "Cirno",
+            "Lumia",
+            "Suwako",
+            "Sanae",
+            "Koishi",
+            "Satori",
+            "Yokari",
+            "Chen",
+            "Kirisame Marisa",
+            "",
+            "Hakurei Reimu"
         };
 
         String[] touhouSorted = RadixSort.sort(touhou);
@@ -52,16 +55,19 @@ public class RadixSortTest {
     @Test
     public void testSortMSD() {
         String[] touhou = new String[] {
-                "Leimu",
-                "Marisa",
-                "Cirno",
-                "Lumia",
-                "Suwako",
-                "Sanae",
-                "Koishi",
-                "Satori",
-                "Yokari",
-                "Chen"
+            "Leimu",
+            "Marisa",
+            "Cirno",
+            "Lumia",
+            "Suwako",
+            "Sanae",
+            "Koishi",
+            "Satori",
+            "Yokari",
+            "Chen",
+            "Kirisame Marisa",
+            "",
+            "Hakurei Reimu"
         };
 
         String[] touhouSorted = RadixSort.sortMSD(touhou);

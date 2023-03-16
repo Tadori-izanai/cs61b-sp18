@@ -16,7 +16,6 @@ public class RadixSort {
      * @return String[] the sorted array
      */
     public static String[] sort(String[] asciis) {
-        // TODO: Implement LSD Sort
         int N = asciis.length;
         String[] results = new String[N];
         System.arraycopy(asciis, 0, results, 0, N);
@@ -28,22 +27,9 @@ public class RadixSort {
             }
         }
 
-        for (int i = 0; i < N; i += 1) {
-            StringBuilder sb = new StringBuilder(results[i]);
-            for (int k = 0; k < maxLength - results[i].length(); k += 1) {
-                sb.append('\u0000');
-            }
-            results[i] = sb.toString();
-        }
-
         for (int i = maxLength - 1; i >= 0; i -= 1) {
             sortHelperLSD(results, i);
         }
-
-        for (int i = 0; i < N; i += 1) {
-            results[i] = results[i].trim();
-        }
-
         return results;
     }
 
@@ -54,28 +40,52 @@ public class RadixSort {
      * @param index The position to sort the Strings on.
      */
     private static void sortHelperLSD(String[] asciis, int index) {
-        // Optional LSD helper method for required LSD radix sort
+        sortHelpers(asciis, 0, asciis.length, index);
+    }
+
+    private static void swap(String[] s, int p, int q) {
+        String tmp = s[p];
+        s[p] = s[q];
+        s[q] = tmp;
+    }
+
+    private static int[] sortHelpers(String[] asciis, int start, int end, int index) {
+        // first, swap those who are shorter than index+1 to the front
+        int numShort = 0;
+        for (int i = start; i < end; i += 1) {
+            if (asciis[i].length() - 1 < index) {
+                swap(asciis, i, start + numShort);
+                numShort += 1;
+            }
+        }
+        start += numShort;
+        if (start == end) {
+            return null;
+        }
+
+        int n = end - start;
         int R = 256;
-        int[] count = new int[R];
-        int[] starts = new int[R];
+        int[] cnt = new int[R];
+        int[] beg = new int[R];
 
-        String[] asciisCopy = new String[asciis.length];
-        System.arraycopy(asciis, 0, asciisCopy, 0, asciis.length);
-
-        for (String s : asciisCopy) {
-            count[(int)(s.charAt(index))] += 1;
-        }
-        int ind = 0;
-        for (int i = 0; i < R; i += 1) {
-            starts[i] = ind;
-            ind += count[i];
-        }
+        String[] asciisCopy = new String[n];
+        System.arraycopy(asciis, start, asciisCopy, 0, n);
 
         for (String s : asciisCopy) {
-            int k = (int)(s.charAt(index));
-            asciis[starts[k]] = s;
-            starts[k] += 1;
+            cnt[s.charAt(index)] += 1;
         }
+        for (int i = 0, ind = 0; i < R; i += 1) {
+            beg[i] = ind;
+            ind += cnt[i];
+        }
+
+        for (String s : asciisCopy) {
+            int k = s.charAt(index);
+            asciis[start + beg[k]] = s;
+            beg[k] += 1;
+        }
+
+        return cnt;
     }
 
     /**
@@ -89,47 +99,18 @@ public class RadixSort {
      *
      **/
     private static void sortHelperMSD(String[] asciis, int start, int end, int index) {
-        // Optional MSD helper method for optional MSD radix sort
+        int[] cnt = sortHelpers(asciis, start, end, index);
+        assert cnt != null;
 
-        // first, swap those who are shorter than index+1 to the front
-        int numShort = 0;
-        for (int i = start; i < end; i += 1) {
-            if (asciis[i].length() - 1 < index) {
-                String tmp = asciis[i];
-                asciis[i] = asciis[start + numShort];
-                asciis[start + numShort] = tmp;
-                numShort += 1;
-            }
+        int sum = 0;
+        for (int n : cnt) {
+            sum += n;
         }
-        start += numShort;
-        if (start == end) {
-            return;
-        }
-
-        int n = end - start;
-        int R = 256;
-        int[] cnt = new int[R];
-        int[] beg = new int[R];
-
-        String[] asciisCopy = new String[n];
-        System.arraycopy(asciis, start, asciisCopy, 0, n);
-
-        for (String s : asciisCopy) {
-            cnt[(int)(s.charAt(index))] += 1;
-        }
-        for (int i = 0, ind = 0; i < R; i += 1) {
-            beg[i] = ind;
-            ind += cnt[i];
-        }
-
-        for (String s : asciisCopy) {
-            int k = (int)(s.charAt(index));
-            asciis[start + beg[k]] = s;
-            beg[k] += 1;
-        }
+        int offset = end - start - sum;
+        start += offset;
 
         // do sorting in each bucket
-        for (int i = 0, ind = 0; i < R; i += 1) {
+        for (int i = 0, ind = 0; i < cnt.length; i += 1) {
             if (cnt[i] > 1) {
                 sortHelperMSD(asciis, start + ind, start + ind + cnt[i], index + 1);
             }
