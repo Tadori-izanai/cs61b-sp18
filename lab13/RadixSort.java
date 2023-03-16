@@ -109,7 +109,7 @@ public class RadixSort {
         int n = end - start;
         int R = 256;
         int[] cnt = new int[R];
-        int[] starts = new int[R];
+        int[] beg = new int[R];
 
         String[] asciisCopy = new String[n];
         System.arraycopy(asciis, start, asciisCopy, 0, n);
@@ -118,14 +118,14 @@ public class RadixSort {
             cnt[(int)(s.charAt(index))] += 1;
         }
         for (int i = 0, ind = 0; i < R; i += 1) {
-            starts[i] = ind;
+            beg[i] = ind;
             ind += cnt[i];
         }
 
         for (String s : asciisCopy) {
             int k = (int)(s.charAt(index));
-            asciis[start + starts[k]] = s;
-            cnt[k] += 1;
+            asciis[start + beg[k]] = s;
+            beg[k] += 1;
         }
 
         // do sorting in each bucket

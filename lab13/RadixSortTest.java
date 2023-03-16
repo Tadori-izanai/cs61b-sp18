@@ -14,7 +14,10 @@ public class RadixSortTest {
                 "Koishi",
                 "Satori",
                 "Yokari",
-                "Chen"
+                "Chen",
+                "Kirisame Marisa",
+                "",
+                "Hakurei Reimu"
         };
 
         System.out.println(Arrays.toString(touhou));
