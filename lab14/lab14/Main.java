@@ -60,7 +60,7 @@ public class Main {
     }
 
     public static void testAcceleratingSawTooth() {
-        Generator g = new AcceleratingSawTooth(200, 0.99);
+        Generator g = new AcceleratingSawToothGenerator(200, 0.99);
         GeneratorAudioVisualizer gav = new GeneratorAudioVisualizer(g);
         gav.drawAndPlay(4096, 1_000_000);
     }
