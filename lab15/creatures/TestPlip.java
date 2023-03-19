@@ -9,6 +9,8 @@ import huglife.Occupant;
 import huglife.Impassible;
 import huglife.Empty;
 
+import javax.sound.midi.Soundbank;
+
 /** Tests the plip class   
  *  @authr FIXME
  */
@@ -36,10 +38,15 @@ public class TestPlip {
 
     @Test
     public void testReplicate() {
-
+        Plip parent = new Plip(2);
+        Plip child = parent.replicate();
+        double delta = 0.00001;
+        assertEquals(parent.energy() * 2.0, 2.0, delta);
+        assertEquals(child.energy() * 2.0, 2.0, delta);
+        assertNotSame(parent, child);
     }
 
-    //@Test
+    @Test
     public void testChoose() {
         Plip p = new Plip(1.2);
         HashMap<Direction, Occupant> surrounded = new HashMap<Direction, Occupant>();
@@ -56,6 +63,30 @@ public class TestPlip {
         Action expected = new Action(Action.ActionType.STAY);
 
         assertEquals(expected, actual);
+
+        // more with Cloruses
+        surrounded.put(Direction.TOP, new Empty());
+        surrounded.put(Direction.BOTTOM, new Empty());
+        surrounded.put(Direction.LEFT, new Clorus(2.0));
+        surrounded.put(Direction.RIGHT, new Clorus(2.0));
+
+        actual = p.chooseAction(surrounded);
+        Action expected01 = new Action(Action.ActionType.REPLICATE, Direction.TOP);
+        Action expected02 = new Action(Action.ActionType.REPLICATE, Direction.BOTTOM);
+        assertTrue(
+            actual.equals(expected01) || actual.equals(expected02)
+        );
+
+        System.out.println(p.energy());
+        p.replicate();
+        System.out.println(p.energy());
+        Action expected1 = new Action(Action.ActionType.MOVE, Direction.TOP);
+        Action expected2 = new Action(Action.ActionType.MOVE, Direction.BOTTOM);
+        Action expected3 = new Action(Action.ActionType.STAY);
+        actual = p.chooseAction(surrounded);
+        assertTrue(
+            actual.equals(expected1) || actual.equals(expected2) || actual.equals(expected3)
+        );
     }
 
     public static void main(String[] args) {

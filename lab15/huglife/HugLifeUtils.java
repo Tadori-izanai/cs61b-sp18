@@ -36,4 +36,9 @@ public class HugLifeUtils {
         int dirIndex = randomInt(L.size() - 1);
         return L.get(dirIndex);
     }
+
+    /** Does linear interpolation for colors */
+    public static int lerp(int color1, int color2, double s) {
+        return (int) (color1 * (1.0 - s) + color2 * s);
+    }
 }
